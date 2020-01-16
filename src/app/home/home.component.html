@@ -1,0 +1,7 @@
+
+<form (submit)="searchTimezone()">
+  <input [(ngModel)]="lat" name="lat" placeholder="Latitute">
+  <input [(ngModel)]="lng" name="lng" placeholder="Longtitute">
+  <button type="submit">Get</button>
+</form>
+<p>{{ displayTime }}</p>
