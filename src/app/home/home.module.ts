@@ -4,7 +4,6 @@ import { HomeRoutingModule } from './home-routing.module';
 import { SharedModule } from '../shared/shared.module';
 import { MatInputModule } from '@angular/material/input'
 import { MatButtonModule } from '@angular/material/button'
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
@@ -14,8 +13,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule,
     SharedModule, 
     MatInputModule,
-    MatButtonModule,
-    MatProgressSpinnerModule
+    MatButtonModule
   ],
   declarations: [HomeComponent],
   exports: [HomeComponent]
