@@ -1,7 +1,14 @@
-
-<form (submit)="searchTimezone()">
-  <input [(ngModel)]="lat" name="lat" placeholder="Latitute">
-  <input [(ngModel)]="lng" name="lng" placeholder="Longtitute">
-  <button type="submit">Get</button>
-</form>
-<p>{{ displayTime }}</p>
+<div>
+  <form [formGroup]="latlngForm" (submit)="searchTimezone()">
+    <mat-form-field>
+      <input matInput type="number" formControlName="latitute" placeholder="Latitute">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput type="number" formControlName="longtitute" placeholder="Longtitute">
+    </mat-form-field>
+    <button mat-button type="submit" [disabled]="latlngForm.invalid">Get</button>
+  </form>
+</div>
+<div>
+  <p>{{ isLoading ? 'Loading ... ' : displayTime }}</p>
+</div>

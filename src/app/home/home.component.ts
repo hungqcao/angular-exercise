@@ -1,18 +1,20 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { TimezoneDBService } from '../shared/timezon-db/timezone-db.service';
 
 /**
  * This class represents the lazy loaded HomeComponent.
  */
 @Component({
-  moduleId: module.id,
   selector: 'sd-home',
   templateUrl: 'home.component.html',
   styleUrls: ['home.component.scss'],
 })
 export class HomeComponent implements OnInit {
 
+  latlngForm: FormGroup
   errorMessage: string;
+  isLoading: boolean;
   displayTime: string;
 
   /**
@@ -22,7 +24,17 @@ export class HomeComponent implements OnInit {
    * @param {TimezoneDBService} timezoneDbService - The injected TimezoneDBService.
    */
   constructor(
-    private timezoneDbService: TimezoneDBService) { }
+    private timezoneDbService: TimezoneDBService) {
+    this.latlngForm = new FormGroup({
+      latitute: new FormControl('', [
+        Validators.required
+      ]),
+      longtitute: new FormControl('', [
+        Validators.required
+      ]),
+    });
+    this.isLoading = false;
+  }
 
   ngOnInit() { }
 
@@ -30,10 +42,14 @@ export class HomeComponent implements OnInit {
    * Handle the nameListService observable
    */
   searchTimezone() {
-    this.timezoneDbService.getTimeZoneByPosition(40.689247, -74.044502)
+    this.isLoading = true;
+    const latVal = this.latlngForm.controls['latitute'].value;
+    const lngVal = this.latlngForm.controls['longtitute'].value;
+    this.timezoneDbService.getTimeZoneByPosition(latVal, lngVal)
       .subscribe(
-        data => this.displayTime = data.formatted,
-        error => this.errorMessage = <any>error
+        data => this.displayTime = `${data.formatted} ${data.zoneName}`,
+        error => this.errorMessage = <any>error,
+        () => this.isLoading = false
       );
   }
 
